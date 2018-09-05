@@ -1,69 +1,93 @@
+function loadDeathGraph(){
+    fetch('cholera/choleraDeaths.tsv')
+    .then((res) => {
+        return res.text();
+    })
+    .then((data) => {
+        deathp(data);
+    });
 
-// $(" #test ").text = requestLocalData("Cholera/choleraDeaths.tsv");
-// console.log(requestLocalData("Cholera/choleraDeaths.tsv"));
-// = Plotly.d3.tsv.parse(requestLocalData("Cholera/choleraDeaths.tsv"));
-// console.log(deathstsv);
+    // this works now.
 
-fetch('cholera/choleraDeaths.tsv')
-// this works but i don't like it
-// .then(function(response){
-//     console.log(response.text())
-// })
-// .then((resp) => resp.text())
-// .then((resp) => console.log())
-// .then(deathp(resp))
-// .then(function(resp){
-//     console.log(resp)
-//     deathp(resp.text());
-// })
-.then((res) => {
-    return res.text();
-})
-.then((data) => {
-    deathp(data);
-})
-.catch(console.log("something bad happened!"));
-
-// this works now.
-
-function deathp(data){
-    // parse the raw tsv into something useful
-    var dataparsed = Plotly.d3.tsv.parse(data);
-    // initialize our holders for data
-    xData = [];
-    attackData = [];
-    deathData = [];
-    totalData = [];
-    // add all the data to the arrays
-    for(i in dataparsed){
-        xData[i] = dataparsed[i].Date;
-        attackData[i] = dataparsed[i].Attack;
-        deathData[i] = dataparsed[i].Death;
-        totalData[i] = parseInt(deathData[i]) + parseInt(attackData[i]);
+    function deathp(data){
+        // parse the raw tsv into something useful
+        var dataparsed = Plotly.d3.tsv.parse(data);
+        // initialize our holders for data
+        var xData = [];
+        var attackData = [];
+        var deathData = [];
+        var totalData = [];
+        var cumulativeData = []
+        // add all the data to the arrays
+        var cumulation = 0;
+        for(i in dataparsed){
+            xData[i] = dataparsed[i].Date;
+            attackData[i] = dataparsed[i].Attack;
+            deathData[i] = dataparsed[i].Death;
+            totalData[i] = parseInt(deathData[i]) + parseInt(attackData[i]);
+            cumulation += parseInt(deathData[i]);
+            cumulativeData[i] = cumulation
+        }
+        var attackTrace = {
+            x: xData,
+            y: attackData,
+            type: 'line',
+            name: 'Cholera Attacks'
+        };
+        var deathTrace = {
+            x: xData,
+            y: deathData,
+            type: 'line',
+            name: 'Cholera Deaths'
+        };
+        var totalTrace = {
+            x: xData,
+            y: totalData,
+            type: 'line',
+            name: 'Total Daily Cholera Incidents'
+        };
+        var cumulativeTrace = {
+            x: xData,
+            y: cumulativeData,
+            type: 'line',
+            name: 'Cumulative Cholera Deaths'
+        };
+        data = [attackTrace, deathTrace, totalTrace, cumulativeTrace];
+        plot2Div = document.getElementById('test');
+        var layout = {
+            title: "Cholera Deaths"
+        };
+    var myChart2=Plotly.plot(plot2Div, data, layout);
     }
-    var attackTrace = {
-        x: xData,
-        y: attackData,
-        type: 'bar',
-        name: 'Cholera Attacks'
-    };
-    var deathTrace = {
-        x: xData,
-        y: deathData,
-        type: 'bar',
-        name: 'Cholera Deaths'
-    };
-    var totalTrace = {
-        x: xData,
-        y: totalData,
-        type: 'bar',
-        name: 'Total Cholera Incidents'
-    };
-    data = [attackTrace, deathTrace, totalTrace];
-    plot2Div = document.getElementById('test');
-    var layout = {
-        title: "Cholera Deaths"
-    };
-   var myChart2=Plotly.plot(plot2Div, data, layout);
 }
 
+// loadDeathGraph();
+
+function aGrade(){
+    fetch('cholera/choleraPumpLocations.csv')
+    .then((res) => {
+        return res.text();
+    })
+    .then((data) => {
+        well(data);
+    });
+
+    fetch('cholera/choleraDeathLocations.csv')
+    .then((res) => {
+        return res.text();
+    })
+    .then((data) => {
+        death(data);
+    });
+
+    function well(data){
+        var dataparsed = Plotly.d3.csv.parse(data);
+        console.log(dataparsed);
+    }
+    function death(data){
+        var dataparsed = Plotly.d3.csv.parse(data);
+        console.log(dataparsed);
+    }
+}
+
+aGrade();
