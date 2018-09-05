@@ -10,14 +10,26 @@ fetch('cholera/choleraDeaths.tsv')
 // .then(function(response){
 //     console.log(response.text())
 // })
-.then((resp) => resp.text())
-.then((resp) => console.log())
-.then(deathp(resp))
+// .then((resp) => resp.text())
+// .then((resp) => console.log())
+// .then(deathp(resp))
+// .then(function(resp){
+//     console.log(resp)
+//     deathp(resp.text());
+// })
+.then((res) => {
+    return res.text();
+})
+.then((data) => {
+    deathp(data);
+})
 .catch(console.log("something bad happened!"));
-// TODO: Make this work lmao
+
+// this works now.
 
 function deathp(data){
-    var data = Plotly.d3.tsv.parse(data);
-    console.log(data)
+    console.log(data);
+    var dataparsed = Plotly.d3.tsv.parse(data);
+    console.log(dataparsed);
 }
 
