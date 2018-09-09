@@ -1,15 +1,15 @@
-function loadDeathGraph(){
+$(document).ready(function(){
+function loadDeathGraph(id){
     fetch('cholera/choleraDeaths.tsv')
     .then((res) => {
         return res.text();
     })
     .then((data) => {
-        deathp(data);
+        deathp(data, id);
     });
 
-    // this works now.
 
-    function deathp(data){
+    function deathp(data, id){
         // parse the raw tsv into something useful
         var dataparsed = Plotly.d3.tsv.parse(data);
         // initialize our holders for data
@@ -17,7 +17,7 @@ function loadDeathGraph(){
         var attackData = [];
         var deathData = [];
         var totalData = [];
-        var cumulativeData = []
+        var cumulativeData = [];
         // add all the data to the arrays
         var cumulation = 0;
         for(i in dataparsed){
@@ -26,7 +26,7 @@ function loadDeathGraph(){
             deathData[i] = dataparsed[i].Death;
             totalData[i] = parseInt(deathData[i]) + parseInt(attackData[i]);
             cumulation += parseInt(deathData[i]);
-            cumulativeData[i] = cumulation
+            cumulativeData[i] = cumulation;
         }
         var attackTrace = {
             x: xData,
@@ -52,18 +52,38 @@ function loadDeathGraph(){
             type: 'line',
             name: 'Cumulative Cholera Deaths'
         };
+
+        var tableValues = [
+            xData,
+            attackData,
+            deathData,
+            totalData
+        ]
+        var tableData = {
+            type: 'table',
+            header: {
+                values: [['Date'], ['Cholera Attacks'], ['Cholera Deaths'], ['Total Cholera Incidents']]
+            },
+            cells: {
+                values: tableValues
+            }
+        }
+        var tableLayout = {
+            title: "Cholera Data"
+        }
+        var table = Plotly.plot('table', [tableData], tableLayout);
+        
         data = [attackTrace, deathTrace, totalTrace, cumulativeTrace];
-        plot2Div = document.getElementById('test');
+        plot2Div = id;
         var layout = {
             title: "Cholera Deaths"
         };
-    var myChart2=Plotly.plot(plot2Div, data, layout);
+        var myChart2 = Plotly.plot(plot2Div, data, layout);
     }
 }
+loadDeathGraph(document.getElementById('test'));
 
-// loadDeathGraph();
-
-function aGrade(){
+function aGrade(id){
     fetch('cholera/choleraPumpLocations.csv')
     .then((res) => {
         return res.text();
@@ -90,4 +110,7 @@ function aGrade(){
     }
 }
 
-aGrade();
+// aGrade(document.getElementById('test'));
+
+
+});
