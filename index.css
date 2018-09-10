@@ -1,14 +1,16 @@
 nav {
     background-color: lightgrey;
     margin: 0px;
-    padding: 0.5em;
+    padding: 1vh;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 nav ul {
+    margin: 0px;
     list-style-type: none;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 nav li {
@@ -17,4 +19,9 @@ nav li {
 
 body {
     margin: 0px;
+}
+
+#mapa {
+    width: 6830px;
+    height: 2160px;
 }
