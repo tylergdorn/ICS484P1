@@ -62,10 +62,11 @@ function loadDeathGraph(id){
         var tableData = {
             type: 'table',
             header: {
-                values: [['Date'], ['Cholera Attacks'], ['Cholera Deaths'], ['Total Cholera Incidents']]
+                values: [['Date'], ['Cholera Attacks'], ['Cholera Deaths'], ['Total Cholera Incidents']],
+                fill: { color: "lightgrey" }
             },
             cells: {
-                values: tableValues
+                values: tableValues,
             }
         }
         var tableLayout = {
@@ -114,3 +115,17 @@ function aGrade(id){
 
 
 });
+
+//shows one section of the data, either a, b, c. if it doesn't get one of these, it does nothing
+function showSection(idChar){
+    if (['a', 'b', 'c'].includes(idChar)){
+        $('main').children().each(function(){
+            var element = $(this);
+            this.css()
+        });
+    }
+}
+
+function showAllSections(){
+
+}

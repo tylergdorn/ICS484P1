@@ -1,0 +1,20 @@
+nav {
+    background-color: lightgrey;
+    margin: 0px;
+    padding: 0.5em;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+nav li {
+    display: inline;
+}
+
+body {
+    margin: 0px;
+}
