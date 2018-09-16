@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 //shows one section of the data, either a, b, c. if it doesn't get one of these, it does nothing
 function showSection(idChar){
-    console.log('something happened');
     if (['a', 'b', 'c'].includes(idChar)){
         showNoSections()
         document.getElementById(idChar).style = 'display: default';
@@ -52,7 +51,7 @@ function cGrade(id){
         deathp(data, id);
     });
 
-
+    // rendering the data we read in
     function deathp(data, id){
         // parse the raw tsv into something useful
         var dataparsed = Plotly.d3.tsv.parse(data);
@@ -72,6 +71,7 @@ function cGrade(id){
             cumulation += parseInt(deathData[i]);
             cumulativeData[i] = cumulation;
         }
+        // add all the data to the traces
         var attackTrace = {
             x: xData,
             y: attackData,
@@ -97,6 +97,7 @@ function cGrade(id){
             name: 'Cumulative Cholera Deaths'
         };
 
+        // also add data to table
         var tableValues = [
             xData,
             attackData,
@@ -116,6 +117,7 @@ function cGrade(id){
         var tableLayout = {
             title: "Cholera Data"
         }
+        // render the table
         var table = Plotly.plot('tablec', [tableData], tableLayout);
         
         data = [attackTrace, deathTrace, totalTrace, cumulativeTrace];
@@ -123,6 +125,7 @@ function cGrade(id){
         var layout = {
             title: "Cholera Deaths"
         };
+        // render the chart
         var myChart2 = Plotly.plot(plot2Div, data, layout);
     }
 }
@@ -130,6 +133,8 @@ function cGrade(id){
 
 // This function fetches and renders part b graphs
 function bGrade(){
+    // it's important to note that d3 won't parse comments in csv and tsv correctly, so I need to remove those
+    // in addition, the tsv file we were given had some spaces seperating elements, so this also needed to be fixed.
     fetch('cholera/naplesCholeraAgeSexData.tsv')
     .then((res) => {
         return res.text();
@@ -138,7 +143,7 @@ function bGrade(){
         return Plotly.d3.tsv.parse(data)
     })
     .then((data) => {
-        console.log(data);
+        naples(data);
     });
 
     fetch('cholera/UKcensus1851.csv')
@@ -149,10 +154,148 @@ function bGrade(){
         return Plotly.d3.csv.parse(data)
     })
     .then((data) => {
-        console.log(data);
+        census(data);
     });
+
+    // this is an arrow function because it is idk
+    let naples = (data) => {
+        let age = [];
+        let male = [];
+        let female = [];
+        for(datum in data){
+            age.push(data[datum].age);
+            male.push(data[datum].male);
+            female.push(data[datum].female);
+        }
+        let tableValues = [
+            age,
+            male,
+            female
+        ];
+        let tableData = {
+            type: 'table',
+            header: {
+                values: [['Age'], ['Male'], ['Female']],
+                fill: { color: "lightgrey" }
+            },
+            cells: {
+                values: tableValues,
+            }
+        }
+        let tableLayout = {
+            title: "Cholera Deaths in Naples"
+        }
+        // render the table
+        let table = Plotly.plot('naplestable', [tableData], tableLayout);
+
+        // render bar charts
+        var tracemale = {
+            x: age,
+            y: male,
+            name: 'Male Deaths',
+            type: 'bar'
+          };
+          
+          var tracefemale = {
+            x: age,
+            y: female,
+            name: 'Female Deaths',
+            type: 'bar'
+          };
+          
+          var data = [tracemale, tracefemale];
+          
+          var layout = {barmode: 'group', title: "Cholera Deaths in Naples, by age"};
+          
+          Plotly.newPlot('naplesbar', data, layout);
+    }
+
+    let census = (data) => {
+        // arrays for holding our data
+        let age = [];
+        let male = [];
+        let female = [];
+        // total number of pops. 0 is male, 1 is female
+        let total = [0, 0];
+        for(i in data){
+            total[0] += parseInt(data[i].male);
+            total[1] += parseInt(data[i].female);
+            age.push(data[i].age);
+            male.push(data[i].male);
+            female.push(data[i].female);
+        }
+
+        // render table
+        let tableValues = [
+            age,
+            male,
+            female
+        ];
+        let tableData = {
+            type: 'table',
+            header: {
+                values: [['Age'], ['Male'], ['Female']],
+                fill: { color: "lightgrey" }
+            },
+            cells: {
+                values: tableValues,
+            }
+        }
+        let tableLayout = {
+            title: "UK 1851 Census Data"
+        }
+        // render the table
+        let table = Plotly.plot('censustable', [tableData], tableLayout);
+        // pi charts
+        // male
+
+        let malePie = [{
+            values: male,
+            labels: age,
+            type: 'pie'
+        }];
+        let layoutpiemale = {title: 'Male Census Data'};
+        Plotly.newPlot('censuspiemale', malePie, layoutpiemale);
+        // female
+
+        let femalePie = [{
+            values: female,
+            labels: age,
+            type: 'pie'
+        }];
+        let layoutpiefemale = {title: 'Female Census Data'};
+        Plotly.newPlot('censuspiefemale', femalePie, layoutpiefemale);
+
+        // Census male and female bar chart
+        var tracemale = {
+            x: age,
+            y: male,
+            name: 'Males by age',
+            type: 'bar'
+          };
+          
+          var tracefemale = {
+            x: age,
+            y: female,
+            name: 'Females by age',
+            type: 'bar'
+          };
+          
+          var data = [tracemale, tracefemale];
+          var layout = {barmode: 'group', title: "UK 1851 Census data, by sex and age"};
+          Plotly.newPlot('censusbar', data, layout);
+
+          let malefemale = [{
+            values: total,
+            labels: ['Male', 'Female'],
+            type: 'pie'
+        }];
+        let layoutpiemalefemale = {title: 'Total Census Data'};
+        Plotly.newPlot('censusmenwomen', malefemale, layoutpiemalefemale);
+    }
 }
 
+// this function fetches and renders part a data
 function aGrade(id){
     fetch('cholera/choleraPumpLocations.csv')
     .then((res) => {
@@ -192,7 +335,9 @@ function aGrade(id){
                 fillColor: 'blue',
                 fillOpacity: 1,
                 radius: 5
-            }).addTo(mymap);
+            });
+            circle.bindPopup('This is a location of a well.');
+            circle.addTo(mymap);
         }
     }
     // plotting deaths on map
@@ -211,8 +356,15 @@ function aGrade(id){
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 radius: deaths
-            }).addTo(mymap);
-            // L.marker(latlong).addTo(mymap);
+            });
+            if(deaths == 1){
+                // this is how we bind popups when you click on the geometry
+                circle.bindPopup('One person died here.');
+            }
+            else {
+                circle.bindPopup(`${deaths} people died here.`);
+            }
+            circle.addTo(mymap);
         }
     }
 
