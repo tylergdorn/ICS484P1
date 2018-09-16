@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById('clink').addEventListener('click', function(){showSection('c')});
     // load graphs
     aGrade(document.getElementById('mapa'));
-    //bGrade();
-    //cGrade(document.getElementById('graphc'));
+    bGrade();
+    cGrade(document.getElementById('graphc'));
     showAllSections();
 });
 
@@ -161,7 +161,17 @@ function aGrade(id){
     // plotting wells on map
     function well(data){
         var dataparsed = Plotly.d3.csv.parse(data);
-        console.log(dataparsed);
+        for(dat in dataparsed){
+            const datum = dataparsed[dat];
+            const keys = Object.keys(datum);
+            const latlong = [datum[keys[1]], datum[keys[0]]];
+            var circle = L.circle(latlong, {
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 1,
+                radius: 5
+            }).addTo(mymap);
+        }
     }
     // plotting deaths on map
     function death(data){
@@ -172,7 +182,15 @@ function aGrade(id){
             // It is parsed to json with some numbers as the field. I didn't want to hard code it. 
             const datum = dataparsed[dat];
             const keys = Object.keys(datum);
-            L.marker([datum[keys[2]], datum[keys[1]]]).addTo(mymap);
+            const latlong = [datum[keys[2]], datum[keys[1]]];
+            const deaths = datum[keys[0]];
+            var circle = L.circle(latlong, {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: deaths
+            }).addTo(mymap);
+            // L.marker(latlong).addTo(mymap);
         }
     }
 
