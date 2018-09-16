@@ -127,8 +127,30 @@ function cGrade(id){
     }
 }
 
-function bGrade(){
 
+// This function fetches and renders part b graphs
+function bGrade(){
+    fetch('cholera/naplesCholeraAgeSexData.tsv')
+    .then((res) => {
+        return res.text();
+    })
+    .then((data) => {
+        return Plotly.d3.tsv.parse(data)
+    })
+    .then((data) => {
+        console.log(data);
+    });
+
+    fetch('cholera/UKcensus1851.csv')
+    .then((res) => {
+        return res.text();
+    })
+    .then((data) => {
+        return Plotly.d3.csv.parse(data)
+    })
+    .then((data) => {
+        console.log(data);
+    });
 }
 
 function aGrade(id){

@@ -26,8 +26,9 @@ body {
 }
 
 #a {
-    width: 99vw;
-    margin: 1vw;
+    width: 90vw;
+    margin: 0 auto;
+    
 }
 
 #mapa {
