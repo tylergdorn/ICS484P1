@@ -61,15 +61,19 @@ function cGrade(id){
         var deathData = [];
         var totalData = [];
         var cumulativeData = [];
+        var cumulativeAttackData = [];
         // add all the data to the arrays
         var cumulation = 0;
+        var cumulationAttack = 0;
         for(i in dataparsed){
             xData[i] = dataparsed[i].Date;
             attackData[i] = dataparsed[i].Attack;
             deathData[i] = dataparsed[i].Death;
             totalData[i] = parseInt(deathData[i]) + parseInt(attackData[i]);
             cumulation += parseInt(deathData[i]);
+            cumulationAttack += parseInt(attackData[i]);
             cumulativeData[i] = cumulation;
+            cumulativeAttackData[i] = cumulationAttack;
         }
         // add all the data to the traces
         var attackTrace = {
@@ -86,9 +90,9 @@ function cGrade(id){
         };
         var totalTrace = {
             x: xData,
-            y: totalData,
+            y: cumulativeAttackData,
             type: 'line',
-            name: 'Total Daily Cholera Incidents'
+            name: 'Cumulative Cholera Attacks'
         };
         var cumulativeTrace = {
             x: xData,
@@ -102,12 +106,14 @@ function cGrade(id){
             xData,
             attackData,
             deathData,
-            totalData
+            totalData,
+            cumulativeAttackData,
+            cumulativeData
         ]
         var tableData = {
             type: 'table',
             header: {
-                values: [['Date'], ['Cholera Attacks'], ['Cholera Deaths'], ['Total Cholera Incidents']],
+                values: [['Date'], ['Cholera Attacks'], ['Cholera Deaths'], ['Total Cholera Incidents'], ['Cumulative Cholera Deaths'], ['Cumulative Cholera Attacks']],
                 fill: { color: "lightgrey" }
             },
             cells: {
