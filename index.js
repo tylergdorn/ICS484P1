@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById('alink').addEventListener('click', function(){showSection('a')});
     document.getElementById('blink').addEventListener('click', function(){showSection('b')});
     document.getElementById('clink').addEventListener('click', function(){showSection('c')});
+    document.getElementById('mainlink').addEventListener('click', showAllSections);
     // load graphs
     aGrade(document.getElementById('mapa'));
     bGrade();
@@ -223,24 +224,29 @@ function bGrade(){
         let female = [];
         // total number of pops. 0 is male, 1 is female
         let total = [0, 0];
+        let totalAge = [];
         for(i in data){
             total[0] += parseInt(data[i].male);
             total[1] += parseInt(data[i].female);
             age.push(data[i].age);
             male.push(data[i].male);
             female.push(data[i].female);
+            let totalAgei = parseInt(data[i].male);
+            totalAgei += parseInt(data[i].female);
+            totalAge.push(totalAgei);
         }
 
         // render table
         let tableValues = [
             age,
             male,
-            female
+            female,
+            totalAge
         ];
         let tableData = {
             type: 'table',
             header: {
-                values: [['Age'], ['Male'], ['Female']],
+                values: [['Age'], ['Male'], ['Female'], ['Combined Population']],
                 fill: { color: "lightgrey" }
             },
             cells: {
