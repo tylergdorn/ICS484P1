@@ -48,6 +48,15 @@ body {
     flex: 50%
 }
 
+.item p {
+    margin: 0 auto;
+    text-align: center;
+}
+
+main {
+    margin-bottom: 4vh;
+}
+
 @media(min-width: 5000px){
     main {
         display: grid;

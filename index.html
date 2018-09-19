@@ -10,6 +10,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="index.css">
+        <title>London 1854 Cholera Outbreak</title>
     </head>
     <body>
         <nav>
@@ -23,22 +24,50 @@
         </nav>
         <main id="main">
             <section id="c">
-                <div id="class"><div id="graphc"></div></div>
-                <div id="class"><div id="tablec"></div></div>
+                <div class="item">
+                    <div id="graphc"></div>
+                    <p>This graph shows the number of cholera deaths and attacks, both cumulatively and at any point in time over time.</p>
+                </div>
+                <div class="item">
+                    <div id="tablec"></div>
+                    <p>This is a table of the above data, but with total cholera "incidents" which is the total attack + deaths on any day.</p>
+                </div>
             </section>
             <section id="b">
-                <div id="item"><div id="naplestable"></div></div>
-                <div id="item"><div id="naplesbar"></div></div>
-                <div id="item"><div id="censustable"></div></div>
-                <div id="item"><div id="censuspie">
-                    <div id="censuspiemale"></div>
-                    <div id="censuspiefemale"></div>
-                </div></div>
-                <div id="item"><div id="censusbar"></div></div>
-                <div id="item"><div id="censusmenwomen"></div></div>
+                <div class="item">
+                    <div id="naplestable"></div>
+                    <p>This is a table of deaths by age and sex per 10,000 people in Naples from 1884-1911</p>
+                    <p>More info can be found <a href="http://www.nejm.org/doi/full/10.1056/NEJM199610103351520">Here</a></p>
+                </div>
+                <div class="item">
+                    <div id="naplesbar"></div>
+                    <p>This is a display of the above data in a bar chart. Data is deaths per 10,000 people</p>
+                </div>
+                <div class="item">
+                    <div id="censustable"></div>
+                    <p>This is a UK 1851 Census data, by age and sex</p>
+                </div>
+                <div class="item">
+                    <div id="censuspie">
+                        <div id="censuspiemale"></div>
+                        <div id="censuspiefemale"></div>
+                    </div>
+                    <p>These are two charts showing the breakdown of age per sex, by male and female respectively</p>
+                </div>
+                <div class="item">
+                    <div id="censusbar"></div>
+                    <p>This is a population breakdown by male and female by age</p>
+                </div>
+                <div class="item">
+                    <div id="censusmenwomen"></div>
+                    <p>This is the overall percentage of men to women. Women slighly outnumber the men in 1851 UK.</p>
+                </div>
             </section>
             <section id="a">
                 <div id="mapa"></div>
+                <p>This is a map of cholera deaths in the 1854 cholera outbreak in London. This map is in many ways a recreation of John Snow's original map, which displayed death locations and number of deaths.
+                The red circles are deaths, and their size indicates the number of deaths. You can click on the individual circles to indicate how many deaths were recorded there.
+                The blue circles are well locations. There should be one more well, near the center of all the deaths, which was the infected well responsible for the deaths.</p>
             </section>
         </main>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,6 +83,8 @@
                   <p>This was created by Tyler Dorn for ICS 484. This uses data about London’s cholera outbreak in 1854</p>
                   <p>You can find more of my projects here: <a href="http://tgdorn.com">tgdorn.com</a></p>
                   <p>The data was compiled by Robin Wilson (robin@rtwilson.com, www.rtwilson.com/academic)</p>
+                  <p>All the graphs are visualized with <a href="http://Plot.ly">Plot.ly</a></p>
+                  <p>The map is visualized with <a href="http://leafletjs.com">leaflet</a></p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
