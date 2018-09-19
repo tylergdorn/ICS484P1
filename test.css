@@ -1,26 +1,3 @@
-nav {
-    background-color: lightgrey;
-    margin: 0px;
-    padding: 1vh;
-    font-family: 'IBM Plex Sans', sans-serif;
-}
-
-nav ul {
-    margin: 0px;
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-
-nav li:hover {
-    background-color: grey;
-}
-
-nav li {
-    display: inline;
-}
-
 body {
     margin: 0px;
 }
@@ -48,6 +25,19 @@ body {
     flex: 50%
 }
 
+.item p {
+    margin: 0 auto;
+    text-align: center;
+}
+
+main {
+    margin-bottom: 4vh;
+}
+
+.item {
+    border-bottom: .1vh solid rgba(109, 109, 109, 0.5);
+}
+
 @media(min-width: 5000px){
     main {
         display: grid;
@@ -63,6 +53,14 @@ body {
 
     nav {
         display: none;
+    }
+
+    hr {
+        display: none;
+    }
+
+    .item {
+        border-bottom: none;
     }
 }
 

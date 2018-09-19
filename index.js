@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById('alink').addEventListener('click', function(){showSection('a')});
     document.getElementById('blink').addEventListener('click', function(){showSection('b')});
     document.getElementById('clink').addEventListener('click', function(){showSection('c')});
-    document.getElementById('mainlink').addEventListener('click', showAllSections);
+    document.getElementById('mainlink').addEventListener('click', showAllSections());
+    document.getElementById('alllink').addEventListener('click', showAllSections);
     // load graphs
     aGrade(document.getElementById('mapa'));
     bGrade();
@@ -19,22 +20,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
 //shows one section of the data, either a, b, c. if it doesn't get one of these, it does nothing
 function showSection(idChar){
     if (['a', 'b', 'c'].includes(idChar)){
-        showNoSections()
+        showNoSections();
         document.getElementById(idChar).style = 'display: default';
+        // this is a terrible hack, and i'm sorry. 
+        // but i'm also lazier than I am sorry.
+        document.getElementById(idChar + 'link').classList.add('active');
+        console.log(document.getElementById(idChar).classList);
     }
 }
 
 function showAllSections(){
+    showNoSections();
     let sections = document.getElementById('main').children;
     for(let s = 0; s < sections.length; s++){
         sections[s].style = 'display: default';
     }
+    let alllink = document.getElementById('alllink').classList.add('active');
 }
 
 function showNoSections(){
     let sections = document.getElementById('main').children;
     for(let s = 0; s < sections.length; s++){
         sections[s].style = 'display: none';
+    }
+    let links = document.getElementById('links').children;
+    for(let s = 0; s < links.length; s++){
+        if(links[s].classList.contains('active')){
+            links[s].classList.remove('active');
+            console.log('removed active');
+        }
     }
 }
 
@@ -337,9 +351,7 @@ function aGrade(id){
 
     // plotting wells on map
     function well(data){
-        console.log(data);
         var dataparsed = Plotly.d3.csv.parse(data);
-        console.log(dataparsed);
         
         for(dat in dataparsed){
             const datum = dataparsed[dat];
