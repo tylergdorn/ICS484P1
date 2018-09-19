@@ -337,18 +337,34 @@ function aGrade(id){
 
     // plotting wells on map
     function well(data){
+        console.log(data);
         var dataparsed = Plotly.d3.csv.parse(data);
+        console.log(dataparsed);
+        
         for(dat in dataparsed){
             const datum = dataparsed[dat];
             const keys = Object.keys(datum);
             const latlong = [datum[keys[1]], datum[keys[0]]];
-            var circle = L.circle(latlong, {
-                color: 'blue',
-                fillColor: 'blue',
-                fillOpacity: 1,
-                radius: 5
-            });
-            circle.bindPopup('This is a location of a well.');
+            // this is the infected well
+            if(dat == 0){
+                var circle = L.circle(latlong, {
+                    color: 'purple',
+                    fillColor: 'purple',
+                    fillOpacity: 1,
+                    radius: 5
+                });
+                circle.bindPopup('This is the location of the infected well.');
+            }
+            // This is for the normal wells
+            else{
+                var circle = L.circle(latlong, {
+                    color: 'blue',
+                    fillColor: 'blue',
+                    fillOpacity: 1,
+                    radius: 5
+                });
+                circle.bindPopup('This is a location of a well.');
+            }
             circle.addTo(mymap);
         }
     }
