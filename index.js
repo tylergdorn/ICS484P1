@@ -25,7 +25,6 @@ function showSection(idChar){
         // this is a terrible hack, and i'm sorry. 
         // but i'm also lazier than I am sorry.
         document.getElementById(idChar + 'link').classList.add('active');
-        console.log(document.getElementById(idChar).classList);
     }
 }
 
@@ -47,7 +46,6 @@ function showNoSections(){
     for(let s = 0; s < links.length; s++){
         if(links[s].classList.contains('active')){
             links[s].classList.remove('active');
-            console.log('removed active');
         }
     }
 }

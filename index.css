@@ -5,7 +5,6 @@ body {
 #a {
     width: 90vw;
     margin: 0 auto;
-    
 }
 
 #mapa {
@@ -62,5 +61,8 @@ main {
     .item {
         border-bottom: none;
     }
-}
 
+    #mapa {
+        height: 25vh;
+    }
+}
