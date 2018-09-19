@@ -37,6 +37,10 @@ main {
     border-bottom: .1vh solid rgba(109, 109, 109, 0.5);
 }
 
+p {
+    font-size: 150%;
+}
+ 
 @media(min-width: 5000px){
     main {
         display: grid;
