@@ -142,7 +142,13 @@ function cGrade(id){
         data = [attackTrace, deathTrace, totalTrace, cumulativeTrace];
         plot2Div = id;
         var layout = {
-            title: "Cholera Deaths"
+            title: "Cholera Deaths",
+            xaxis: {
+                title: 'Time'
+            },
+            yaxis: {
+                title: 'Number of Deaths/Attacks'
+            }
         };
         // render the chart
         var myChart2 = Plotly.plot(plot2Div, data, layout);
@@ -224,7 +230,16 @@ function bGrade(){
           
           var data = [tracemale, tracefemale];
           
-          var layout = {barmode: 'group', title: "Cholera Deaths in Naples, by age"};
+          var layout = {
+                barmode: 'group',
+                title: "Cholera Deaths in Naples, by age",
+                xaxis: {
+                    title: 'Age'
+                },
+                yaxis: {
+                    title: 'Number of Deaths per 10,000 People'
+                }
+            };
           
           Plotly.newPlot('naplesbar', data, layout);
     }
@@ -266,7 +281,7 @@ function bGrade(){
             }
         }
         let tableLayout = {
-            title: "UK 1851 Census Data"
+            title: "UK 1851 Census Data",
         }
         // render the table
         let table = Plotly.plot('censustable', [tableData], tableLayout);
@@ -306,7 +321,16 @@ function bGrade(){
           };
           
           var data = [tracemale, tracefemale];
-          var layout = {barmode: 'group', title: "UK 1851 Census data, by sex and age"};
+          var layout = {
+                barmode: 'group',
+                title: "UK 1851 Census data, by sex and age",
+                xaxis: {
+                    title: 'Age'
+                },
+                yaxis: {
+                    title: 'Number of People'
+                }
+            };
           Plotly.newPlot('censusbar', data, layout);
 
           let malefemale = [{
